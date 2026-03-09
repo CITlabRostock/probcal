@@ -1,0 +1,59 @@
+# ---- Dataset ----
+data_path = "Datasets/dataset_real_A.csv"
+label_column = "y_true"
+prob_column = "y_prob"
+
+# ---- Calibration methods ----
+methods = ["isotonic", "bbq"]
+
+# ---- data handling ----
+[data]
+test_size = 0.2 # proportion of data to be used as test set
+random_state = 42
+stratify = true
+
+# ---- Bootstrapping ----
+[bootstrap]
+n_bootstrap = 500  # int, must be >= 1 (number of bootstrap samples)
+ci = 0.95          # float, between 0 and 1 (confidence interval)
+n_jobs = -1  # int, -1 = all cores, must not be 0
+
+# ---- Parametric methods ----
+[parametric]
+# L2 regularization options are only usable with manual regularization strength instead of Gridsearch so far
+use_regularization = false
+regularization_strength = 0.0
+
+# ---- Isotonic ----
+[isotonic]
+# currently no method-specific options
+
+# ---- Bayesian Binning into Quantiles ----
+[bbq]
+C = 5 # Scaling factor for bin count search range. Higher values increase computation time significantly.
+N_prime = 2.0 # Prior strength distributed across all bins (e.g., 2.0 indicates a prior strength of 2 imaginary samples distributed across all bins).
+
+# ---- Evaluation ----
+[evaluation]
+compute_accuracy = true
+compute_f1 = true
+compute_logloss = true
+compute_brier = true
+compute_ece = true
+compute_mce = true
+
+# ---- Prints ----
+[prints]
+analyse_baseline = true
+print_youden_threshold_on_calibrated = true
+print_std_on_calibrated = true
+
+# ---- Plots ----
+[plots]
+plot_baseline = true
+plot_calibrated_predictions = true
+plot_calibrated_predictions_with_data = true
+plot_calibrated_predictions_ci = true
+plot_calibration_curves = true
+plot_reliability_diagrams_scatter = true
+plot_reliability_diagrams_bar = false
